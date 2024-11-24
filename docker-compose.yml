@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-mutuelle
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_USER: root
+      MYSQL_PASSWORD:
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mutuelle-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD:
+    ports:
+      - "8081:80"
+    networks:
+      - mutuelle-network
+    depends_on:
+      - mysql
+
+networks:
+  mutuelle-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
