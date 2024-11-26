@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface MedicamentReferentielRepository extends JpaRepository<MedicamentReferentiel, Long> {
-    boolean existsByNom(String nom);
-    MedicamentReferentiel findByNom(String nom);
+    Optional<MedicamentReferentiel> findByCodeBarre(String codeBarre);
 }
 

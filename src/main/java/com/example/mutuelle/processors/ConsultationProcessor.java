@@ -13,6 +13,7 @@ public class ConsultationProcessor implements ItemProcessor<Dossier, Dossier> {
     public Dossier process(Dossier dossier) throws Exception {
         // Calculate the consultation reimbursement
         double remboursementConsultation = dossier.getPrixConsultation() * pourcentageConsultation;
+        dossier.setRemboursementConsultation(remboursementConsultation);
         dossier.setMontantTotalFrais(dossier.getMontantTotalFrais() + remboursementConsultation);
         return dossier;
     }

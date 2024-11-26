@@ -8,22 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class TraitementRemboursementProcessor implements ItemProcessor<Traitement, Traitement> {
 
-    private final MedicamentReferentielRepository referentielRepository;
-
-    public TraitementRemboursementProcessor(MedicamentReferentielRepository referentielRepository) {
-        this.referentielRepository = referentielRepository;
-    }
-
     @Override
     public Traitement process(Traitement traitement) throws Exception {
-        // Find the reference medication
-        var medicament = referentielRepository.findByNom(traitement.getNomMedicament());
-
-        if (medicament != null && traitement.isExiste()) {
-            // Calculate reimbursement amount for treatment
-            double montantRemboursement = medicament.getPrix() * medicament.getPourcentageRemboursement();
-            traitement.setMontantRemboursement(montantRemboursement);
+        if (traitement.isExiste()) {
+            double remboursement = traitement.getPrixMedicament() * traitement.getPourcentageRemboursement();
+            traitement.setMontantRemboursement(remboursement);
+        } else {
+            traitement.setMontantRemboursement(0.0);
         }
+
         return traitement;
     }
 }

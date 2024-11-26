@@ -12,7 +12,6 @@ public class TotalRemboursementProcessor implements ItemProcessor<Dossier, Dossi
 
     @Override
     public Dossier process(Dossier dossier) throws Exception {
-        // Calculate total reimbursement for treatments
         double totalRemboursement = 0;
 
         List<Traitement> traitements = dossier.getTraitements();
@@ -24,8 +23,9 @@ public class TotalRemboursementProcessor implements ItemProcessor<Dossier, Dossi
 
         // Add the consultation reimbursement to the total
         totalRemboursement += dossier.getMontantTotalFrais();
-        dossier.setMontantTotalFrais(totalRemboursement);
+        dossier.setTotalRemboursement(totalRemboursement);
 
         return dossier;
+
     }
 }

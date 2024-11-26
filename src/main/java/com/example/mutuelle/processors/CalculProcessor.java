@@ -37,7 +37,7 @@ public class CalculProcessor implements ItemProcessor<Dossier, Dossier> {
         // Process each treatment
         for (Traitement traitement : dossier.getTraitements()) {
             traitement = traitementMappingProcessor.process(traitement);
-            traitement = traitementRemboursementProcessor.process(traitement);
+            traitementRemboursementProcessor.process(traitement);
         }
 
         // Calcule total reimbursement
