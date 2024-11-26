@@ -1,9 +1,16 @@
 package com.example.mutuelle.models;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "dossiers")
 public class Dossier {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nomAssure;
     private String numeroAffiliation;
     private String immatriculation;
@@ -13,6 +20,7 @@ public class Dossier {
     private int nombrePiecesJointes;
     private String nomBeneficiaire;
     private Date dateDepotDossier;
+    @OneToMany(mappedBy = "dossier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Traitement> traitements;
 
     public String getNomAssure() {

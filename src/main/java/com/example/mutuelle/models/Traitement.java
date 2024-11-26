@@ -1,11 +1,31 @@
 package com.example.mutuelle.models;
 
+import com.example.mutuelle.models.Dossier;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "traitements")
 public class Traitement {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String codeBarre;
-    private boolean existe;
+    private Boolean existe;
     private String nomMedicament;
     private String typeMedicament;
-    private double prixMedicament;
+    private Double prixMedicament;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dossier_id")
+    private Dossier dossier;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCodeBarre() {
         return codeBarre;
@@ -15,11 +35,11 @@ public class Traitement {
         this.codeBarre = codeBarre;
     }
 
-    public boolean isExiste() {
+    public Boolean isExiste() {
         return existe;
     }
 
-    public void setExiste(boolean existe) {
+    public void setExiste(Boolean existe) {
         this.existe = existe;
     }
 
@@ -39,11 +59,19 @@ public class Traitement {
         this.typeMedicament = typeMedicament;
     }
 
-    public double getPrixMedicament() {
+    public Double getPrixMedicament() {
         return prixMedicament;
     }
 
-    public void setPrixMedicament(double prixMedicament) {
+    public void setPrixMedicament(Double prixMedicament) {
         this.prixMedicament = prixMedicament;
+    }
+
+    public Dossier getDossier() {
+        return dossier;
+    }
+
+    public void setDossier(Dossier dossier) {
+        this.dossier = dossier;
     }
 }
