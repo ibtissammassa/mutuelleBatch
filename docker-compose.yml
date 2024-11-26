@@ -5,9 +5,8 @@ services:
     image: mysql:8.0
     container_name: mysql-mutuelle
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Allow empty password for root
-      MYSQL_DATABASE: mutuelle           # Database name to create
-      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: mutuelle
     ports:
       - "3306:3306"
     volumes:

@@ -20,6 +20,8 @@ public class Dossier {
     private int nombrePiecesJointes;
     private String nomBeneficiaire;
     private Date dateDepotDossier;
+    private double remboursementConsultation;
+    private double totalRemboursement;
     @OneToMany(mappedBy = "dossier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Traitement> traitements;
 
@@ -101,5 +103,29 @@ public class Dossier {
 
     public void setDateDepotDossier(Date dateDepotDossier) {
         this.dateDepotDossier = dateDepotDossier;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getRemboursementConsultation() {
+        return remboursementConsultation;
+    }
+
+    public void setRemboursementConsultation(double remboursementConsultation) {
+        this.remboursementConsultation = remboursementConsultation;
+    }
+
+    public double getTotalRemboursement() {
+        return totalRemboursement;
+    }
+
+    public void setTotalRemboursement(double totalRemboursement) {
+        this.totalRemboursement = totalRemboursement;
     }
 }

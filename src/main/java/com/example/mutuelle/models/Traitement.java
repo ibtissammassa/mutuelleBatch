@@ -9,15 +9,24 @@ public class Traitement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String codeBarre;
-    private Boolean existe;
+
     private String nomMedicament;
     private String typeMedicament;
-    private Double prixMedicament;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    private boolean existe;
+    private String codeBarre;
+    private double prixMedicament;
+    private double montantRemboursement;
+    @ManyToOne
     @JoinColumn(name = "dossier_id")
     private Dossier dossier;
+
+    public double getMontantRemboursement() {
+        return montantRemboursement;
+    }
+
+    public void setMontantRemboursement(double montantRemboursement) {
+        this.montantRemboursement = montantRemboursement;
+    }
 
     public Long getId() {
         return id;
@@ -25,22 +34,6 @@ public class Traitement {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCodeBarre() {
-        return codeBarre;
-    }
-
-    public void setCodeBarre(String codeBarre) {
-        this.codeBarre = codeBarre;
-    }
-
-    public Boolean isExiste() {
-        return existe;
-    }
-
-    public void setExiste(Boolean existe) {
-        this.existe = existe;
     }
 
     public String getNomMedicament() {
@@ -59,11 +52,27 @@ public class Traitement {
         this.typeMedicament = typeMedicament;
     }
 
-    public Double getPrixMedicament() {
+    public boolean isExiste() {
+        return existe;
+    }
+
+    public void setExiste(boolean existe) {
+        this.existe = existe;
+    }
+
+    public String getCodeBarre() {
+        return codeBarre;
+    }
+
+    public void setCodeBarre(String codeBarre) {
+        this.codeBarre = codeBarre;
+    }
+
+    public double getPrixMedicament() {
         return prixMedicament;
     }
 
-    public void setPrixMedicament(Double prixMedicament) {
+    public void setPrixMedicament(double prixMedicament) {
         this.prixMedicament = prixMedicament;
     }
 

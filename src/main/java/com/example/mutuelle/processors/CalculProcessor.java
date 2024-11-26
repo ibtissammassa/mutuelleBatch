@@ -8,21 +8,41 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalculProcessor implements ItemProcessor<Dossier, Dossier> {
 
-    private static final double CONSULTATION_REIMBURSEMENT_RATE = 0.7;
+    private final ValidationProcessor validationProcessor;
+    private final ConsultationProcessor consultationProcessor;
+    private final TraitementMappingProcessor traitementMappingProcessor;
+    private final TraitementRemboursementProcessor traitementRemboursementProcessor;
+    private final TotalRemboursementProcessor totalRemboursementProcessor;
+
+    public CalculProcessor(ValidationProcessor validationProcessor,
+                           ConsultationProcessor consultationProcessor,
+                           TraitementMappingProcessor traitementMappingProcessor,
+                           TraitementRemboursementProcessor traitementRemboursementProcessor,
+                           TotalRemboursementProcessor totalRemboursementProcessor) {
+        this.validationProcessor = validationProcessor;
+        this.consultationProcessor = consultationProcessor;
+        this.traitementMappingProcessor = traitementMappingProcessor;
+        this.traitementRemboursementProcessor = traitementRemboursementProcessor;
+        this.totalRemboursementProcessor = totalRemboursementProcessor;
+    }
 
     @Override
     public Dossier process(Dossier dossier) throws Exception {
-        double consultationReimbursement = dossier.getPrixConsultation() * CONSULTATION_REIMBURSEMENT_RATE;
-        double totalReimbursement = consultationReimbursement;
+        // Validate the dossier first
+        dossier = validationProcessor.process(dossier);
 
+        // consultation reimbursement
+        dossier = consultationProcessor.process(dossier);
+
+        // Process each treatment
         for (Traitement traitement : dossier.getTraitements()) {
-            if (traitement.isExiste()) {
-                double traitementReimbursement = traitement.getPrixMedicament() * 0.8; // Ex
-                totalReimbursement += traitementReimbursement;
-            }
+            traitement = traitementMappingProcessor.process(traitement);
+            traitement = traitementRemboursementProcessor.process(traitement);
         }
-        dossier.setMontantTotalFrais(totalReimbursement);
+
+        // Calcule total reimbursement
+        dossier = totalRemboursementProcessor.process(dossier);
+
         return dossier;
     }
 }
-
