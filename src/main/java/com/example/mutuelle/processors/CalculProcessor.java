@@ -28,7 +28,7 @@ public class CalculProcessor implements ItemProcessor<Dossier, Dossier> {
 
     @Override
     public Dossier process(Dossier dossier) throws Exception {
-        // Validate the dossier first
+        // Validate
         dossier = validationProcessor.process(dossier);
 
         // consultation reimbursement

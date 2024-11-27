@@ -19,7 +19,6 @@ public class TraitementMappingProcessor implements ItemProcessor<Traitement, Tra
 
     @Override
     public Traitement process(Traitement traitement) throws Exception {
-        // Map treatment to MedicamentReferentiel
         Optional<MedicamentReferentiel> referentielOpt = referentielRepository.findByCodeBarre(traitement.getCodeBarre());
         if (referentielOpt.isPresent()) {
             MedicamentReferentiel medicamentReferentiel = referentielOpt.get();
